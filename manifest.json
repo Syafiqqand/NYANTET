@@ -1,0 +1,19 @@
+{
+  "name": "NYANTET — Catat Keuangan",
+  "short_name": "NYANTET",
+  "description": "Pencatat keuangan pribadi yang bekerja sepenuhnya offline.",
+  "lang": "id-ID",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
