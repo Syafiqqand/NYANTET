@@ -11,7 +11,7 @@ Sajikan folder proyek melalui static web server (atau fitur *Live Server* editor
 - Dashboard dengan saldo saat ini, pemasukan/pengeluaran per periode, dan transaksi terbaru.
 - Form pemasukan dan pengeluaran dengan validasi; sumber pemasukan dapat ditulis bebas.
 - Riwayat gabungan yang dikelompokkan menurut tanggal serta hapus transaksi.
-- Saldo awal melalui Pengaturan.
+- Pilihan tema gelap atau terang melalui Pengaturan.
 - Penyimpanan IndexedDB, dukungan offline, dan manifest PWA.
 
 ## Struktur

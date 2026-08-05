@@ -1,4 +1,4 @@
-const CACHE_NAME = "nyantet-v2";
+const CACHE_NAME = "nyantet-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,9 +7,10 @@ const APP_SHELL = [
   "./js/app.js",
   "./js/database.js",
   "./js/transactions.js",
+  "./js/settings.js",
   "./js/date-utils.js",
   "./js/ui.js",
-  "./assets/icon.svg"
+  "./assets/LOGO.png"
 ];
 
 self.addEventListener("install", (event) => {

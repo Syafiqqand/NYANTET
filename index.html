@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="NYANTET, pencatat keuangan pribadi yang bekerja sepenuhnya offline." />
     <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="assets/icon.svg" />
+    <link rel="icon" href="assets/LOGO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/LOGO.png" />
     <link rel="stylesheet" href="css/style.css" />
     <title>NYANTET — Catat Keuangan</title>
   </head>
@@ -15,7 +15,7 @@
     <div class="app-shell">
       <main class="main-content">
         <header class="app-header">
-          <a class="brand" href="#dashboard"><span class="brand-mark" aria-hidden="true">N</span><span>NYANTET</span></a>
+          <a class="brand" href="#dashboard"><img class="brand-logo" src="assets/LOGO.png" alt="NYANTET" /></a>
           <p class="header-caption">Keuangan pribadi</p>
         </header>
 
@@ -29,22 +29,6 @@
             </div>
           </div>
 
-          <div class="filter-panel">
-            <label for="dashboard-filter">Periode ringkasan</label>
-            <select id="dashboard-filter" name="dashboard-filter">
-              <option value="today">Hari ini</option>
-              <option value="week">Minggu ini</option>
-              <option value="month" selected>Bulan ini</option>
-              <option value="year">Tahun ini</option>
-              <option value="custom">Rentang tanggal</option>
-            </select>
-            <div id="custom-date-range" class="date-range" hidden>
-              <label>Mulai<input id="filter-start-date" type="date" /></label>
-              <label>Sampai<input id="filter-end-date" type="date" /></label>
-              <button id="apply-date-range" class="button button-secondary" type="button">Terapkan</button>
-            </div>
-          </div>
-
           <div id="dashboard-summary" class="summary-grid" aria-live="polite"></div>
           <section class="content-card recent-card" aria-labelledby="recent-title">
             <div class="section-heading">
@@ -52,6 +36,20 @@
               <button id="open-history" class="text-button" type="button">Lihat semua</button>
             </div>
             <div id="recent-transactions" class="transaction-list"></div>
+          </section>
+          <section class="filter-panel" aria-label="Filter laporan">
+            <p class="filter-label">Periode laporan</p>
+            <div class="filter-chips" role="group" aria-label="Pilih periode laporan">
+              <button class="filter-chip" type="button" data-filter="today">Hari ini</button>
+              <button class="filter-chip" type="button" data-filter="week">Minggu</button>
+              <button class="filter-chip is-active" type="button" data-filter="month">Bulan ini</button>
+              <button class="filter-chip" type="button" data-filter="year">Tahun ini</button>
+              <button class="filter-chip" type="button" data-filter="custom">Custom</button>
+            </div>
+            <div id="custom-date-range" class="date-range" hidden>
+              <label>Mulai<input id="filter-start-date" type="date" /></label>
+              <label>Sampai<input id="filter-end-date" type="date" /></label>
+            </div>
           </section>
         </section>
 
@@ -92,13 +90,14 @@
 
         <section id="settings-page" class="page" aria-labelledby="settings-title" hidden>
           <div class="page-heading"><div><p class="eyebrow">Aplikasi</p><h1 id="settings-title">Pengaturan</h1></div></div>
-          <form id="settings-form" class="content-card transaction-form" novalidate>
-            <div class="form-intro"><span class="transaction-icon settings-icon" aria-hidden="true">⚙</span><p>Atur saldo sebelum transaksi pertama Anda dicatat.</p></div>
-            <label for="initial-balance">Saldo awal (Rp)</label>
-            <input id="initial-balance" name="initialBalance" type="number" inputmode="numeric" min="0" max="999999999999" step="1" placeholder="0" required />
-            <p id="settings-message" class="form-message" role="alert"></p>
-            <button class="button" type="submit">Simpan saldo awal</button>
-          </form>
+          <section class="content-card appearance-card" aria-labelledby="theme-title">
+            <p class="eyebrow">Appearance</p>
+            <h2 id="theme-title">Theme</h2>
+            <div class="theme-options" role="radiogroup" aria-label="Pilih tema aplikasi">
+              <label class="theme-option"><input type="radio" name="theme" value="light" checked /><span>Light</span></label>
+              <label class="theme-option"><input type="radio" name="theme" value="dark" /><span>Dark</span></label>
+            </div>
+          </section>
         </section>
       </main>
     </div>
@@ -109,8 +108,8 @@
       <button class="nav-item" type="button" data-page="income">
         <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10" /></svg><span>Pemasukan</span>
       </button>
-      <button class="nav-item nav-add" type="button" data-page="expense">
-        <span class="add-icon" aria-hidden="true">+</span><span>Tambah</span>
+      <button class="nav-item nav-expense" type="button" data-page="expense">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6" /></svg><span>Pengeluaran</span>
       </button>
       <button class="nav-item" type="button" data-page="history">
         <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10M7 3v18M17 3v18M7 8h10M7 13h10M7 18h10" /></svg><span>Riwayat</span>

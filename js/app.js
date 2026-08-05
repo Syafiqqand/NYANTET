@@ -4,17 +4,17 @@ import {
   createIncome,
   getAllTransactions,
   getDashboardData,
-  getInitialBalance,
-  removeTransaction,
-  updateInitialBalance
+  removeTransaction
 } from "./transactions.js";
+import { getTheme, saveTheme } from "./settings.js";
 import {
+  applyTheme,
   renderDashboard,
   renderHistory,
+  setActiveFilter,
   setActivePage,
   setCustomRangeVisible,
   setFormMessage,
-  setInitialBalance,
   showAppError,
   showToast
 } from "./ui.js";
@@ -24,6 +24,7 @@ const dashboardState = {
   customStart: "",
   customEnd: ""
 };
+let currentTheme = "dark";
 
 function getCurrentRange() {
   return getDateRange(dashboardState.filter, dashboardState.customStart, dashboardState.customEnd);
@@ -35,9 +36,8 @@ async function refreshDashboard() {
 }
 
 async function refreshData() {
-  const [transactions, initialBalance] = await Promise.all([getAllTransactions(), getInitialBalance()]);
+  const transactions = await getAllTransactions();
   renderHistory(transactions);
-  setInitialBalance(initialBalance);
   await refreshDashboard();
 }
 
@@ -88,23 +88,9 @@ async function handleExpenseSubmit(event) {
   }
 }
 
-async function handleSettingsSubmit(event) {
-  event.preventDefault();
-  const form = event.currentTarget;
-  setFormMessage("settings");
-  try {
-    const values = new FormData(form);
-    await updateInitialBalance(values.get("initialBalance"));
-    await refreshData();
-    setFormMessage("settings", "Saldo awal berhasil disimpan.", true);
-    showToast("Saldo awal diperbarui.");
-  } catch (error) {
-    setFormMessage("settings", error.message || "Saldo awal tidak dapat disimpan.");
-  }
-}
-
-async function handleFilterChange(event) {
-  dashboardState.filter = event.target.value;
+async function handleFilterChange(filter) {
+  dashboardState.filter = filter;
+  setActiveFilter(filter);
   setCustomRangeVisible(dashboardState.filter === "custom");
 
   if (dashboardState.filter === "custom" && !dashboardState.customStart) {
@@ -119,6 +105,21 @@ async function handleFilterChange(event) {
     await refreshDashboard();
   } catch (error) {
     showToast(error.message || "Filter tidak dapat diterapkan.");
+  }
+}
+
+async function handleThemeChange(event) {
+  const selectedTheme = event.target.value;
+  const previousTheme = currentTheme;
+  applyTheme(selectedTheme);
+  currentTheme = selectedTheme;
+
+  try {
+    await saveTheme(selectedTheme);
+  } catch (error) {
+    currentTheme = previousTheme;
+    applyTheme(previousTheme);
+    showToast(error.message || "Tema tidak dapat disimpan.");
   }
 }
 
@@ -163,9 +164,15 @@ function bindEvents() {
   document.querySelector("#open-history").addEventListener("click", () => showPage("history"));
   document.querySelector("#income-form").addEventListener("submit", handleIncomeSubmit);
   document.querySelector("#expense-form").addEventListener("submit", handleExpenseSubmit);
-  document.querySelector("#settings-form").addEventListener("submit", handleSettingsSubmit);
-  document.querySelector("#dashboard-filter").addEventListener("change", handleFilterChange);
-  document.querySelector("#apply-date-range").addEventListener("click", handleCustomRange);
+  document.querySelectorAll(".filter-chip").forEach((button) => {
+    button.addEventListener("click", () => handleFilterChange(button.dataset.filter));
+  });
+  document.querySelectorAll("#custom-date-range input").forEach((input) => {
+    input.addEventListener("change", handleCustomRange);
+  });
+  document.querySelectorAll('input[name="theme"]').forEach((input) => {
+    input.addEventListener("change", handleThemeChange);
+  });
   document.querySelector("#history-transactions").addEventListener("click", handleDelete);
 }
 
@@ -182,6 +189,8 @@ async function initializeApp() {
   bindEvents();
   registerServiceWorker();
   try {
+    currentTheme = await getTheme();
+    applyTheme(currentTheme);
     await refreshData();
   } catch (error) {
     showAppError(error.message || "NYANTET tidak dapat memuat data lokal.");

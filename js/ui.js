@@ -81,18 +81,27 @@ export function setActivePage(pageName) {
   window.scrollTo(0, 0);
 }
 
+export function setActiveFilter(filter) {
+  document.querySelectorAll(".filter-chip").forEach((chip) => {
+    chip.classList.toggle("is-active", chip.dataset.filter === filter);
+  });
+}
+
 export function setFormMessage(formName, message = "", isSuccess = false) {
   const element = document.querySelector(`#${formName}-message`);
   element.textContent = message;
   element.classList.toggle("is-success", Boolean(message && isSuccess));
 }
 
-export function setInitialBalance(value) {
-  document.querySelector("#initial-balance").value = value;
-}
-
 export function setCustomRangeVisible(isVisible) {
   document.querySelector("#custom-date-range").hidden = !isVisible;
+}
+
+export function applyTheme(theme) {
+  const selectedTheme = theme === "light" ? "light" : "dark";
+  document.documentElement.dataset.theme = selectedTheme;
+  document.querySelector('meta[name="theme-color"]').content = selectedTheme === "light" ? "#ffffff" : "#191919";
+  document.querySelector(`input[name="theme"][value="${selectedTheme}"]`).checked = true;
 }
 
 let toastTimer;

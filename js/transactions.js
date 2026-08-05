@@ -5,8 +5,7 @@ import {
   deleteIncome,
   getAllExpense,
   getAllIncome,
-  getSettings,
-  saveSettings
+  getSettings
 } from "./database.js";
 import { isDateInRange, isValidDateString } from "./date-utils.js";
 
@@ -20,17 +19,6 @@ function validateAmount(value, fieldName = "Jumlah") {
   const amount = Number(value);
   if (!Number.isFinite(amount) || amount <= 0 || !Number.isInteger(amount) || amount > MAX_AMOUNT) {
     throw validationError(`${fieldName} harus berupa angka bulat lebih dari 0.`);
-  }
-  return amount;
-}
-
-function validateInitialBalance(value) {
-  if (String(value ?? "").trim() === "") {
-    throw validationError("Saldo awal wajib diisi.");
-  }
-  const amount = Number(value);
-  if (!Number.isFinite(amount) || amount < 0 || !Number.isInteger(amount) || amount > MAX_AMOUNT) {
-    throw validationError("Saldo awal harus berupa angka bulat 0 atau lebih.");
   }
   return amount;
 }
@@ -85,11 +73,6 @@ export async function removeTransaction(type, id) {
   if (type === "income") return deleteIncome(numericId);
   if (type === "expense") return deleteExpense(numericId);
   throw validationError("Jenis transaksi tidak valid.");
-}
-
-export async function updateInitialBalance(value) {
-  const initialBalance = validateInitialBalance(value);
-  await saveSettings({ initialBalance });
 }
 
 export async function getInitialBalance() {

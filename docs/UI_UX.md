@@ -3,85 +3,148 @@
 # NYANTET — UI & UX Guidelines
 
 ## Design Philosophy
-Target visual style:
-- Notion (clean, calm, minimal)
-- Linear (modern, premium)
-- Apple (soft, spacious, polished)
 
-The application should feel like a personal tool, NOT an admin dashboard.
+Target inspiration:
+- Notion
+- Linear
+- Apple Human Interface
+- Raycast
 
-## Design Principles
+The application should feel calm, premium, minimal, and personal.
+Avoid the appearance of an admin dashboard.
+
+---
+
+# Core Principles
 
 - Mobile-first
+- Offline-first
 - Minimal UI
-- Premium appearance
-- Plenty of whitespace
+- Premium feel
 - Fast interaction
-- Consistent spacing (8px grid)
+- Plenty of whitespace
+- 8px spacing system
 
-## Theme
+---
 
-Primary:
-- #4F46E5
+# Color Palette
+
+The UI should avoid bright, neon, or saturated colors.
+
+### Light Theme
 
 Background:
-- #F8F8F7 (Light)
-- #0F172A (Dark)
+- #F7F7F5
 
 Surface:
-- #FFFFFF / #1E293B
+- #FFFFFF
 
-Income:
-- Green
+Primary Text:
+- #111111
 
-Expense:
-- Red
-
-Text:
-- #111827
+Secondary Text:
+- #6B7280
 
 Border:
 - #E5E7EB
 
-## Typography
+Primary Accent:
+- #1F2937 (Slate)
 
-Font:
-- Inter (preferred)
-- Geist (alternative)
+Income:
+- #16A34A
 
+Expense:
+- #DC2626
+
+### Dark Theme (Primary Theme)
+
+Background:
+- #0F1115
+
+Surface:
+- #171A21
+
+Elevated Surface:
+- #1E232D
+
+Primary Text:
+- #F5F5F5
+
+Secondary Text:
+- #A1A1AA
+
+Border:
+- #2C3440
+
+Primary Accent:
+- #D4D4D8
+
+Income:
+- #22C55E
+
+Expense:
+- #EF4444
+
+Notes:
+- Do not use purple, neon blue, cyan, or flashy gradients.
+- Prefer monochrome UI with subtle green/red only for financial meaning.
+
+---
+
+# Typography
+
+Preferred fonts:
+- Inter
+- Geist
+
+Use medium font weight for titles.
 Avoid decorative fonts.
 
-## Navigation
+---
 
-Mobile:
-- Bottom Navigation (Home, Income, Add, History, Settings)
+# Navigation
 
-Desktop:
-- Responsive layout.
-- Do NOT use a permanent admin-style sidebar.
+## Mobile
 
-## Components
+Use Bottom Navigation:
+- Dashboard
+- Income
+- Add
+- History
+- Settings
+
+Avoid permanent sidebars.
+
+---
+
+# Components
 
 Cards:
-- Rounded corners (16px)
+- Radius: 16px
 - Soft shadow
-- Minimal borders
+- Thin border
+- Spacious padding
 
 Buttons:
 - Rounded
-- Large tap target
-- Subtle hover animation
+- Full width when appropriate
+- Monochrome styling
+- Smooth hover/press animation (200–250ms)
 
 Inputs:
-- Clean
-- Minimal border
-- Spacious padding
+- Minimal
+- Thin border
+- Large touch target
+- Comfortable spacing
 
-## Forms
+---
+
+# Forms
 
 Income:
 - Amount
-- Source (TEXT INPUT, not dropdown)
+- Source (text input only)
 - Date
 
 Expense:
@@ -89,34 +152,48 @@ Expense:
 - Description
 - Date
 
-Avoid unnecessary dropdowns.
+Avoid dropdowns unless they clearly improve usability.
 
-## Dashboard
+---
 
-Display:
-- Current Balance
-- Total Income
-- Total Expense
-- Recent Transactions
+# Dashboard
 
-No excessive cards.
+Prioritize information in this order:
 
-## UX
+1. Current Balance
+2. Total Income
+3. Total Expense
+4. Date Filter
+5. Recent Transactions
 
-Target:
-- Add transaction in under 10 seconds.
-- Maximum 2 taps before entering data.
-- Smooth 200–250ms transitions.
+The balance should be the first thing users see.
 
-## Do
+Keep filters compact (chip/button). Avoid large filter panels by default.
 
-- Keep screens simple.
-- Prioritize readability.
-- Build an app that feels native on Android.
+---
 
-## Don't
+# UX
 
-- Don't look like an admin dashboard.
+Goal:
+- Record a transaction in under 10 seconds.
+- Reduce taps whenever possible.
+- Auto-apply filters without requiring an extra "Apply" button.
+- Smooth, subtle animations only.
+
+---
+
+# Do
+
+- Think like a native Android app.
+- Keep interfaces calm.
+- Favor readability over decoration.
+- Use consistent spacing.
+- Use icons sparingly.
+
+# Don't
+
+- Don't imitate admin dashboards.
+- Don't use bright accent colors.
 - Don't overuse gradients.
-- Don't use excessive shadows.
-- Don't add unnecessary controls.
+- Don't clutter screens with unnecessary cards.
+- Don't use heavy shadows.
