@@ -15,8 +15,10 @@
     <div class="app-shell">
       <main class="main-content">
         <header class="app-header">
-          <a class="brand" href="#dashboard"><img class="brand-logo" src="assets/LOGO.png" alt="NYANTET" /></a>
-          <p class="header-caption">Keuangan pribadi</p>
+          <a class="brand" href="#dashboard">
+            <span class="brand-name">NYANTET</span>
+            <span class="brand-tagline">Nyatet Keuangan Teratur</span>
+          </a>
         </header>
 
         <div id="app-error" class="app-error" role="alert" hidden></div>
@@ -24,7 +26,6 @@
         <section id="dashboard-page" class="page is-active" aria-labelledby="dashboard-title">
           <div class="page-heading">
             <div>
-              <p class="eyebrow">Ringkasan keuangan</p>
               <h1 id="dashboard-title">Beranda</h1>
             </div>
           </div>
@@ -58,7 +59,7 @@
           <form id="income-form" class="content-card transaction-form" novalidate>
             <div class="form-intro"><span class="transaction-icon income-icon" aria-hidden="true">↗</span><p>Catat uang yang masuk ke saldo Anda.</p></div>
             <label for="income-amount">Jumlah (Rp)</label>
-            <input id="income-amount" name="amount" type="number" inputmode="numeric" min="1" max="999999999999" step="1" placeholder="Contoh: 500000" required />
+            <input id="income-amount" name="amount" type="text" inputmode="numeric" placeholder="Contoh: 500.000" autocomplete="off" required />
             <label for="income-source">Sumber</label>
             <input id="income-source" name="source" type="text" maxlength="80" placeholder="Contoh: Gaji utama" autocomplete="off" required />
             <label for="income-date">Tanggal</label>
@@ -73,7 +74,7 @@
           <form id="expense-form" class="content-card transaction-form" novalidate>
             <div class="form-intro"><span class="transaction-icon expense-icon" aria-hidden="true">↘</span><p>Catat uang yang keluar dari saldo Anda.</p></div>
             <label for="expense-amount">Jumlah (Rp)</label>
-            <input id="expense-amount" name="amount" type="number" inputmode="numeric" min="1" max="999999999999" step="1" placeholder="Contoh: 75000" required />
+            <input id="expense-amount" name="amount" type="text" inputmode="numeric" placeholder="Contoh: 75.000" autocomplete="off" required />
             <label for="expense-description">Keterangan</label>
             <input id="expense-description" name="description" type="text" maxlength="160" placeholder="Contoh: Makan siang" required />
             <label for="expense-date">Tanggal</label>
@@ -89,7 +90,7 @@
         </section>
 
         <section id="settings-page" class="page" aria-labelledby="settings-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Aplikasi</p><h1 id="settings-title">Pengaturan</h1></div></div>
+          <div class="page-heading"><div><h1 id="settings-title">Pengaturan</h1></div></div>
           <section class="content-card appearance-card" aria-labelledby="theme-title">
             <p class="eyebrow">Appearance</p>
             <h2 id="theme-title">Theme</h2>

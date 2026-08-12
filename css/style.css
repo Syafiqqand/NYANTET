@@ -198,18 +198,26 @@ input,
 
 .brand {
   display: inline-flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
 }
 
-.brand-logo {
-  height: 3.5rem;
-  width: auto;
-  display: block;
-  object-fit: contain;
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1.1;
 }
 
-.header-caption {
-  display: none;
+.brand-tagline {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
 }
 
 /* ===================================================

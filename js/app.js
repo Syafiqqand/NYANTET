@@ -62,7 +62,8 @@ async function handleIncomeSubmit(event) {
   setFormMessage("income");
   try {
     const values = new FormData(form);
-    await createIncome({ amount: values.get("amount"), source: values.get("source"), date: values.get("date") });
+    const rawAmount = parseAmount(values.get("amount"));
+    await createIncome({ amount: rawAmount, source: values.get("source"), date: values.get("date") });
     resetTransactionForm(form);
     await refreshData();
     setFormMessage("income", "Pemasukan berhasil disimpan.", true);
@@ -78,7 +79,8 @@ async function handleExpenseSubmit(event) {
   setFormMessage("expense");
   try {
     const values = new FormData(form);
-    await createExpense({ amount: values.get("amount"), description: values.get("description"), date: values.get("date") });
+    const rawAmount = parseAmount(values.get("amount"));
+    await createExpense({ amount: rawAmount, description: values.get("description"), date: values.get("date") });
     resetTransactionForm(form);
     await refreshData();
     setFormMessage("expense", "Pengeluaran berhasil disimpan.", true);
@@ -151,6 +153,33 @@ async function handleDelete(event) {
   }
 }
 
+function formatAmount(value) {
+  // Hapus semua karakter non-digit
+  const digits = value.replace(/\D/g, "");
+  // Tambahkan titik setiap 3 digit dari kanan
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function parseAmount(formatted) {
+  // Kembalikan string angka murni tanpa titik
+  return formatted.replace(/\./g, "");
+}
+
+function bindAmountFormatting(inputId) {
+  const input = document.querySelector(`#${inputId}`);
+  if (!input) return;
+  input.addEventListener("input", () => {
+    const cursorPos = input.selectionStart;
+    const prevLen = input.value.length;
+    const formatted = formatAmount(input.value);
+    input.value = formatted;
+    // Sesuaikan posisi kursor agar tidak loncat ke ujung
+    const newLen = input.value.length;
+    const diff = newLen - prevLen;
+    input.setSelectionRange(cursorPos + diff, cursorPos + diff);
+  });
+}
+
 function bindEvents() {
   document.querySelectorAll(".brand").forEach((brand) => {
     brand.addEventListener("click", (event) => {
@@ -174,6 +203,8 @@ function bindEvents() {
     input.addEventListener("change", handleThemeChange);
   });
   document.querySelector("#history-transactions").addEventListener("click", handleDelete);
+  bindAmountFormatting("income-amount");
+  bindAmountFormatting("expense-amount");
 }
 
 function registerServiceWorker() {
