@@ -15,6 +15,12 @@ function validationError(message) {
   return new Error(message);
 }
 
+function insufficientBalanceError(message) {
+  const error = new Error(message);
+  error.name = "InsufficientBalanceError";
+  return error;
+}
+
 function validateAmount(value, fieldName = "Jumlah") {
   const amount = Number(value);
   if (!Number.isFinite(amount) || amount <= 0 || !Number.isInteger(amount) || amount > MAX_AMOUNT) {
@@ -64,6 +70,10 @@ export async function createExpense(input) {
   const amount = validateAmount(input.amount);
   const description = validateText(input.description, "Keterangan", 160);
   const date = validateDate(input.date);
+  const currentBalance = await getCurrentBalance();
+  if (amount > currentBalance) {
+    throw insufficientBalanceError("SALDO MU GAK CUKUP WOI!!");
+  }
   return addExpense({ amount, description, date, createdAt: new Date().toISOString() });
 }
 
@@ -78,6 +88,20 @@ export async function removeTransaction(type, id) {
 export async function getInitialBalance() {
   const settings = await getSettings();
   return Number.isFinite(Number(settings.initialBalance)) ? Number(settings.initialBalance) : 0;
+}
+
+export async function getCurrentBalance() {
+  const [initialBalance, allTransactions] = await Promise.all([
+    getInitialBalance(),
+    getAllTransactions()
+  ]);
+  const totalIncome = allTransactions
+    .filter(t => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+  const totalExpense = allTransactions
+    .filter(t => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+  return initialBalance + totalIncome - totalExpense;
 }
 
 export async function getAllTransactions() {

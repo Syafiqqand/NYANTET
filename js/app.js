@@ -9,6 +9,7 @@ import {
 import { getTheme, saveTheme } from "./settings.js";
 import {
   applyTheme,
+  hideInsufficientBalanceAlert,
   renderDashboard,
   renderHistory,
   setActiveFilter,
@@ -16,6 +17,7 @@ import {
   setCustomRangeVisible,
   setFormMessage,
   showAppError,
+  showInsufficientBalanceAlert,
   showToast
 } from "./ui.js";
 
@@ -86,6 +88,10 @@ async function handleExpenseSubmit(event) {
     setFormMessage("expense", "Pengeluaran berhasil disimpan.", true);
     showToast("Pengeluaran berhasil ditambahkan.");
   } catch (error) {
+    if (error.name === "InsufficientBalanceError") {
+      showInsufficientBalanceAlert();
+      return;
+    }
     setFormMessage("expense", error.message || "Pengeluaran tidak dapat disimpan.");
   }
 }
@@ -186,6 +192,13 @@ function bindEvents() {
       event.preventDefault();
       showPage("dashboard");
     });
+  });
+  document.querySelector("#balance-alert-close").addEventListener("click", hideInsufficientBalanceAlert);
+  document.querySelector("#balance-alert").addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) hideInsufficientBalanceAlert();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") hideInsufficientBalanceAlert();
   });
   document.querySelectorAll(".nav-item").forEach((button) => {
     button.addEventListener("click", () => showPage(button.dataset.page));

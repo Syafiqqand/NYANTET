@@ -118,3 +118,13 @@ export function showAppError(message) {
   errorBox.textContent = message;
   errorBox.hidden = false;
 }
+
+export function showInsufficientBalanceAlert() {
+  const alert = document.querySelector("#balance-alert");
+  alert.hidden = false;
+}
+
+export function hideInsufficientBalanceAlert() {
+  const alert = document.querySelector("#balance-alert");
+  alert.hidden = true;
+}
